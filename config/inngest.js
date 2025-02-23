@@ -3,7 +3,7 @@ import connectDB from "./db";
 import User from "@/models/User";
 
 // Create a client to send and receive events
-export const inngest = new Inngest({ id: "quickcart-next" });
+export const inngest = new Inngest({ id: "quickcart" });
 
 // Inngest func to save user data in database
 export const syncUserCreation = inngest.createFunction(
@@ -29,6 +29,7 @@ export const syncUserUpdation = inngest.createFunction({
     id: 'update-user-from-clerk'
 },
     {event: 'clerk/user.updated'},
+
     async ({event}) => {
         const {id, first_name, last_name, email_addresses, image_url} = event-data
         const userData = {
