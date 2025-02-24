@@ -53,20 +53,21 @@ const OrderSummary = () => {
       if (!cartItems) {
         return toast.error('cart is empty');
       }
+
       let cartItemsArray = Object.keys(cartItems).map((key) => ({
         product: key,
         quantity: cartItems[key],
       }));
-      cartItemsArray = cartItemsArray.filter((item) => item.quantity > 0);
+      cartItemsArray = cartItemsArray.filter(item => item.quantity > 0);
 
       if (cartItemsArray.length === 0) {
         return toast.error('cart is empty');
       }
 
-      const token = getToken();
+      const token = await getToken();
 
       const { data } = await axios.post(
-        'api/order/create',
+        '/api/order/create',
         {
           address: selectedAddress._id,
           items: cartItemsArray,
