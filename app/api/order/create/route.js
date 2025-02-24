@@ -3,7 +3,7 @@ import Product from "@/models/product";
 import User from "@/models/User";
 import { getAuth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import toast from "react-hot-toast";
+
 
 
 
@@ -28,7 +28,7 @@ export async function POST(request) {
                 userId,
                 address,
                 items,
-                amount:amount + Math.floor(amount * 0.02),
+                amount: amount + Math.floor(amount * 0.02),
                 date:Date.now()
             }
         })
