@@ -17,10 +17,11 @@ export async function POST(request) {
         }
 
         // calculate amount using items
-        const amount = await items.reduce(async (acc, item) => {
+        let amount = 0;
+        for (const item of items) {
             const product = await Product.findById(item.product);
-            return acc + product.offerPrice * item.quantity;
-        }, 0)
+            amount += product.offerPrice * item.quantity;
+        }
 
         await inngest.send({
             name: 'order/created',
@@ -35,7 +36,7 @@ export async function POST(request) {
 
         // Clear usercart 
         const user = await User.findById(userId)
-        user.cartItems = {}
+        user.cartItems = []
         await user.save()
 
         return NextResponse.json({ success:true, message: 'Order PLaced'})
